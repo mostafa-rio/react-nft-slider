@@ -1,4 +1,5 @@
 import React from 'react'
+import './Gallery.css';
 
 type Props = {
     label: string
