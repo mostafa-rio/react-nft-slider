@@ -1,0 +1,113 @@
+.nft-card {
+  border-radius: 10px;
+  width: 300px;
+  padding: 7px; 
+  max-width: 100%;
+  background: #15202b;
+  box-shadow: 0px 14px 40px rgba(#eaeaea, 0.2);
+}
+
+.nft-card__header .title {
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.nft-card__header .title span {
+  color: teal;
+}
+
+.nft-card__header .creator {
+  color: #fff;
+}
+
+.nft-card__header .creator span {
+  color: #fff;
+}
+
+.nft-card__header .creator .tick-mark {
+  vertical-align: text-bottom;
+}
+
+/* .nft-card__header .profiles {
+  margin-top: auto;
+  flex-grow: 1;
+  position: relative;
+  height: 38px;
+} */
+
+/* .nft-card__header .profiles .profile-wrapper {
+  background-color: #eaeaea;
+  width: 30px;
+  height: 30px;
+  border-radius: 40px;
+  position: absolute;
+  right: 0;
+} */
+
+/* .nft-card__header .profiles .profile-wrapper .profile {
+  width: 26px;
+  border-radius: 50px;
+  height: 26px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+} */
+
+
+/* .nft-card__header .profiles .profile-wrapper:nth-child(2) {
+  right: 35px;
+  z-index: 0;
+  .profile {
+    background: no-repeat center url("../../assets/profile2.jpg");
+    background-size: cover;
+  }
+} */
+
+/* .nft-card__header .profiles .profile-wrapper:nth-child(3) {
+  right: 15px;
+  z-index: 1;
+  .profile {
+    background: no-repeat center url("../../assets/profile3.jpg");
+    background-size: cover;
+  }
+} */
+ 
+
+.nft-card__content {
+  aspect-ratio: 1/1;
+  padding: 5px;
+  border-radius: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+.nft-card__content_badge {
+  font-size: 12px;
+  font-weight: 400;
+  color: #ebebf0;
+}
+
+.nft-card__content_price {
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.nft-card__content_bid {
+  font-size: 14px;
+  padding-left: 10px;
+  padding-right: 50px;
+  position: relative;
+}
+
+.nft-card__content_bid .arrow {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  right: 4px;
+  width: 34px;
+  border-radius: 50px;
+  background: rgba(#555, 0.3);
+}

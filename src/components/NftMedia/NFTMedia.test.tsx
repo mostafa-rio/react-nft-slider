@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from '@testing-library/react';
 
-import Gallery from './Gallery';
+import Gallery from './dasd';
 
 describe('Gallery', () => { 
     test('should render the Gallery', () => { 

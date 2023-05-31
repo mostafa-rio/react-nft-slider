@@ -54,5 +54,8 @@
   "types": "dist/index.d.ts",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/mostafa-rio"
+  },
+  "dependencies": {
+    "mime": "^3.0.0"
   }
 }
