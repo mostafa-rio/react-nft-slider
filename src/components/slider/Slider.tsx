@@ -88,6 +88,7 @@ const Slider = ({ children }: SliderProps) => {
         setTouchStartX(touchCurrentX);
       }
     };
+
     return (
       <div className="slider" 
         onTouchStart={handleTouchStart}
@@ -103,8 +104,9 @@ const Slider = ({ children }: SliderProps) => {
             </div>
           ))}
         </div>
+        {/* //TODO make props for chevron icons */}
           <div className="slider__control slider__control-left" onClick={handleScrollLeft}>
-            <ChevronLeft />
+            <ChevronLeft /> 
           </div>
           <div className="slider__control slider__control-right" onClick={handleScrollRight}>
             <ChevronRight />

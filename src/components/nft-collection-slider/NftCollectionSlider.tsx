@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Slider from '../slider/Slider'
 import NftCard, { NftCardProps } from '../nft-card/NftCard'
+import { DataSource } from '../../types'
+import Service from '../service'
+import { RaribleItemInCollectionType } from '../../types/Rarible'
 
-const nfts: NftCardProps[] = [
+const nftsds: NftCardProps[] = [
   {
     title:'nft title here', 
     bid: 30.3,
@@ -41,9 +44,29 @@ const nfts: NftCardProps[] = [
   }
 ]
 
-type Props = {}
+type Props = {
+  dataSource: DataSource,
+  size: number,// number of items to load in each request
+  apiKey?: string
+}
 
-function NFTMedia({}: Props) {
+function NftCollectionSlider({dataSource = DataSource.RARIBLE, size = 25, apiKey}: Props) {
+  
+  const [nfts, setNfts] = useState<NftCardProps[]>([])
+  const fetchData = async () => {
+    
+    const dataSource = await Service.createDataSourceInstance(DataSource.RARIBLE);
+    const res = await dataSource.getCollectionByContract('0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', 'ETHEREUM', null)
+    const mapedNfts: NftCardProps[] = res.nfts
+    .map(item => ({
+      image: item.meta.content[0].url,
+      title: item.meta.name
+    }))
+    setNfts(mapedNfts);
+  }
+  useEffect(() => {
+    fetchData();
+  }, [dataSource])
 
   return (
     <Slider>
@@ -52,7 +75,7 @@ function NFTMedia({}: Props) {
   )
 }
 
-export default NFTMedia
+export default NftCollectionSlider
 // slider component that does only slideing
 
 // default slide component that being used slide not passed 

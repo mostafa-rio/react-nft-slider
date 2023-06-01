@@ -6,31 +6,22 @@ import ChevronRight from "../icons/ChevronRight";
 
 export type NftCardProps = {
   title: string;
-  creatorAddress: string;
   image: string;
-  variant?: 'Green' | 'Yellow',
-  bid: number;
-  number: number;
 };
 
-function NftCard({ bid, image, title, creatorAddress, number, ...restProps }: NftCardProps) {
+function NftCard({ image, title, ...restProps }: NftCardProps) {
   return (
     <div {...restProps} className="m-auto nft-card">
       {/* card header */}
       <div className="nft-card__header d-flex">
         <div className="ms-0">
-          <h3 className="title">
-            {title} <span>#{number}</span>
-          </h3>
-          <p className="creator">
+          <h3 className="title">{title}</h3>
+          {/* <p className="creator">
             <span>by: </span>
             {creatorAddress}
-          </p>
+          </p> */}
         </div>
         <div className="m-auto me-0 profiles">
-          <div className="profile-wrapper">
-            <div className="profile"></div>
-          </div>
         </div>
       </div>
 
