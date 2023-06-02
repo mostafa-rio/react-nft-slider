@@ -1,5 +1,5 @@
 {
-  "name": "@mostafa-rio/react-nft-gallery",
+  "name": "react-nft-slider",
   "version": "0.0.1",
   "description": "react component library",
   "scripts": {
@@ -53,7 +53,10 @@
   ],
   "types": "dist/index.d.ts",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/mostafa-rio"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "dependencies": {
     "mime": "^3.0.0"
