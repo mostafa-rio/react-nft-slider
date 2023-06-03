@@ -1,3 +1,5 @@
+## ![](https://github-production-user-asset-6210df.s3.amazonaws.com/32630862/243078466-00fbf8f5-b7f0-46eb-b127-57c363ff28f0.png)  
+
 ## **React NFT Slider**
 
 A React component that creates a slider showcasing NFTs from a specific collection without the need for connecting a wallet or using Web3.js or Ether.js.
@@ -28,7 +30,7 @@ yarn add react-nft-slider
 
 ## **Usage**
 
-```plaintext
+```javascript
 import React from 'react';
 import NFTSlider from 'react-nft-slider';
 
