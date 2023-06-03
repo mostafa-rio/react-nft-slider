@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import './Slider.css';
 import ChevronRight from '../icons/ChevronRight';
 import ChevronLeft from '../icons/ChevronLeft';
@@ -7,7 +7,7 @@ interface SliderProps {
   children: React.ReactNode;
 }
 
-const Slider = ({ children }: SliderProps) => {
+const Slider: FC<SliderProps> = ({ children}) => {
 
     const sliderRef = useRef<HTMLDivElement>(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -90,7 +90,7 @@ const Slider = ({ children }: SliderProps) => {
     };
 
     return (
-      <div className="slider" 
+      <div className="slider"  
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove} 
         onMouseMove={handleMouseMove}

@@ -1,4 +1,4 @@
-import { DataSource, ServiceInterface } from "../../types";
+import { DataSource, ServiceInterface } from "../types";
 import OpenSeaService from "./OpenSeaService"; 
 import RaribleService from "./RaribleService";
 

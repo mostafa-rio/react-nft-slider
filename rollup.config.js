@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
 import postcss from 'rollup-plugin-postcss';
+import alias from '@rollup/plugin-alias';
 
 // import * as packageJson from './package.json';
 const packageJson = require('./package.json');
@@ -23,6 +24,11 @@ export default [
             }
         ],
         plugins: [
+            alias({
+                entries: [
+                    {find: 'components', replacement: './src/components'}
+                ]
+            }),
             resolve(),
             commonjs(),
             typescript({tsconfig: './tsconfig.json'}),

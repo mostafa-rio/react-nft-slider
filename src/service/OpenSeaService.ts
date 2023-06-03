@@ -1,4 +1,4 @@
-import { ServiceInterface, getCollectionResType } from "../../types";
+import { ServiceInterface, getCollectionResType } from "../types";
 
 export default class OpenSeaService implements ServiceInterface {
     baseUrl = '';

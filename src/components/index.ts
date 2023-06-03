@@ -1,1 +1,1 @@
-export { default as Gallery } from './nft-collection-slider';
+export { default as NftSlider } from './nft-slider';

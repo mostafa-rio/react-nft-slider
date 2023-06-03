@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import Slider from './Slider';
+import Slider from '../components/slider/Slider';
 const nfts: NftCardProps[] = [
  
  {
@@ -26,7 +26,7 @@ const nfts: NftCardProps[] = [
     image:'https://assets.raribleuserdata.com/prod/v1/image/t_image_preview/aHR0cHM6Ly9pcGZzLmlvL2lwZnMvUW1TZThISmdaRUo3amNkOXhxMnE4S2hVakFDUkFaRUVjUkJXNFNacXN3ZTJocg==',
   }
 ]
-import NftCard, { NftCardProps } from '../nft-card/NftCard';
+import NftCard, { NftCardProps } from '../components/nft-card/NftCard';
 
 const meta: Meta<typeof Slider> = {
   title: 'Slider',

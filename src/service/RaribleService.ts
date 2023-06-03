@@ -1,4 +1,4 @@
-import { ServiceInterface, getCollectionResType } from "../../types";
+import { ServiceInterface, getCollectionResType } from "../types";
 
 export default class RaribleService implements ServiceInterface {
     baseUrl = 'https://api.rarible.org/v0.1';

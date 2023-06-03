@@ -1,6 +1,6 @@
 {
   "name": "react-nft-slider",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "react component library",
   "scripts": {
     "rollup": "rollup -c --bundleConfigAsCjs",
@@ -15,6 +15,7 @@
     "@babel/preset-env": "^7.22.2",
     "@babel/preset-react": "^7.22.3",
     "@babel/preset-typescript": "^7.21.5",
+    "@rollup/plugin-alias": "^5.0.0",
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-typescript": "^11.1.1",
@@ -28,6 +29,7 @@
     "@storybook/react": "^7.0.18",
     "@storybook/react-vite": "^7.0.18",
     "@storybook/testing-library": "^0.1.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.1",
     "@types/react": "^18.2.6",
@@ -52,8 +54,7 @@
     "dist"
   ],
   "types": "dist/index.d.ts",
-  "publishConfig": {
-  },
+  "publishConfig": {},
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
