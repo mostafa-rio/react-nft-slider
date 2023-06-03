@@ -1,12 +1,15 @@
+.slider-wrapper {
+  padding: 1rem;
+  position: relative;
+}
 .slider {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
+  width: 100%;
+  overflow: hidden;
   }
   
   .slider__cards {
     display: flex;
-    gap: 10px;
+    gap: 0.4rem;
     overflow: hidden;
   }
   

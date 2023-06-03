@@ -22,18 +22,18 @@ const Slider: FC<SliderProps> = ({ children}) => {
         const scrollLeft = sliderRef.current.scrollLeft;
         const newPosition = scrollLeft - sliderWidth;
   
-        if (newPosition < 0) {
-          // If reached the beginning, scroll to the end
-          sliderRef.current.scrollTo({
-            left: sliderRef.current.scrollWidth,
-            behavior: 'smooth',
-          });
-        } else {
+        // if (newPosition < 0) {
+        //   // If reached the beginning, scroll to the end
+        //   sliderRef.current.scrollTo({
+        //     left: sliderRef.current.scrollWidth,
+        //     behavior: 'smooth',
+        //   });
+        // } else {
           sliderRef.current.scrollTo({
             left: newPosition,
             behavior: 'smooth',
           });
-        }
+        // }
       }
     };
   
@@ -43,18 +43,18 @@ const Slider: FC<SliderProps> = ({ children}) => {
         const scrollLeft = sliderRef.current.scrollLeft;
         const newPosition = scrollLeft + sliderWidth;
   
-        if (newPosition >= sliderRef.current.scrollWidth) {
-          // If reached the end, scroll to the beginning
-          sliderRef.current.scrollTo({
-            left: 0,
-            behavior: 'smooth',
-          });
-        } else {
+        // if (newPosition >= sliderRef.current.scrollWidth) {
+        //   // If reached the end, scroll to the beginning
+        //   sliderRef.current.scrollTo({
+        //     left: 0,
+        //     behavior: 'smooth',
+        //   });
+        // } else {
           sliderRef.current.scrollTo({
             left: newPosition,
             behavior: 'smooth',
           });
-        }
+        // }
       }
     };
   
@@ -90,27 +90,29 @@ const Slider: FC<SliderProps> = ({ children}) => {
     };
 
     return (
-      <div className="slider"  
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove} 
-        onMouseMove={handleMouseMove}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-      >
-        <div className="slider__cards" ref={sliderRef}>
-          {React.Children.map(children, (child, index) => (
-            <div key={index} className="slider__card">
-              {child}
-            </div>
-          ))}
+      <div className="slider-wrapper">
+        <div className="slider"  
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove} 
+          onMouseMove={handleMouseMove}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+        >
+          <div className="slider__cards" ref={sliderRef}>
+            {React.Children.map(children, (child, index) => (
+              <div key={index} className="slider__card">
+                {child}
+              </div>
+            ))}
+          </div>
+          {/* //TODO make props for chevron icons */}
         </div>
-        {/* //TODO make props for chevron icons */}
-          <div className="slider__control slider__control-left" onClick={handleScrollLeft}>
-            <ChevronLeft /> 
-          </div>
-          <div className="slider__control slider__control-right" onClick={handleScrollRight}>
-            <ChevronRight />
-          </div>
+            <div className="slider__control slider__control-left" onClick={handleScrollLeft}>
+              <ChevronLeft /> 
+            </div>
+            <div className="slider__control slider__control-right" onClick={handleScrollRight}>
+              <ChevronRight />
+            </div>
       </div>
     );
 };

@@ -1,42 +1,44 @@
-import React, { useEffect, useState } from 'react'
+import React, { Children, useEffect, useState } from 'react'
 import Slider from '../slider/Slider'
 import NftCard, { NftCardProps } from '../nft-card/NftCard'
 import { DataSource } from '../../types'
 import Service from '../../service'
 import { RaribleItemInCollectionType } from '../../types/Rarible'
 
-const nftsds: NftCardProps[] = [
-  {
-    title:'nft title here',
-    image:'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.forbes.com%2Fadvisor%2Finvesting%2Fcryptocurrency%2Fbored-ape-nfts%2F&psig=AOvVaw2ngq1kCUKoBIFbbpyfrIlQ&ust=1685617484086000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPidpc-0n_8CFQAAAAAdAAAAABAE',
-  },{
-    title:'nft title here',
-    image:'https://lh3.googleusercontent.com/dmEAwcJEiyhliQCaUSwW9fV0_DhTsn6maTRrDUj-YTU0ekSyJbOfUEFp91cyR3nAVAlIZirc7-d5U4AuxmGQKL9yZ22Hl8E4Bg=s400',
-  },{
-    title:'nft title here',
-    image:'https://lh3.googleusercontent.com/jHir-ineLKs05xtFpnyEkvmaYu6wmiIP3OmCL23-86gvWrtEDyMe0XqXiToN_vgzMnSJB8mYz6kAqwvImThlpEeBhzxr6nTN8eA=s400',
-  },{
-    title:'nft title here',
-    image:'https://lh3.googleusercontent.com/QOvp4TyxNIUYYGNzZ6UfKU_XkAsc8MoG-qQvIaKR-Z1byacK_1ZSimda1JuNxWAQY3RSTn0qojRklVYR09YU7l7DotRfaQHG8kk=s400',
-  },{
-    title:'nft title here',
-    image:'https://assets.raribleuserdata.com/prod/v1/image/t_image_preview/aHR0cHM6Ly9pcGZzLmlvL2lwZnMvUW1TZThISmdaRUo3amNkOXhxMnE4S2hVakFDUkFaRUVjUkJXNFNacXN3ZTJocg==',
-  }
-]
+enum GetNftsBy {
+  owner = 'owner',
+  collection = 'collection'
+} 
 
 type Props = {
-  dataSource: DataSource.OPENSEA | DataSource.RARIBLE,
-  size: number,// number of items to load in each request
-  apiKey?: string
+  dataSource?: DataSource.RARIBLE,// opensea in next version
+  size?: number,// number of items to load in each request
+  // apiKey?: string,
+  // getNftsBy: keyof typeof GetNftsBy,
+  collection: string,
+  // owner?: string,
+  chain: 'ETHEREUM' | 'POLYGON'
+  // onlyShowSlider?: boolean,// alows users to fetch nfts on thier own and just make slider out of it
+  // nfts?: NftCardProps[] // nfts fetched by user and ready for slider
+  // children?: React.ReactNode
 }
 
-function NftSlider({dataSource = DataSource.RARIBLE, size = 25, apiKey}: Props) {
+function NftSlider({
+    dataSource = DataSource.RARIBLE, 
+    size = 25, 
+    // apiKey, 
+    // getNftsBy = 'collection',
+    collection,
+    chain = 'ETHEREUM'
+    // children,
+    // owner
+  }: Props) {
   
   const [nfts, setNfts] = useState<NftCardProps[]>([])
-  const fetchData = async () => {
-    
-    const dataSource = await Service.createDataSourceInstance(DataSource.RARIBLE);
-    const res = await dataSource.getCollectionByContract('0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', 'ETHEREUM', null)
+
+  const fetchDataByCollection = async () => {
+    const source = await Service.createDataSourceInstance(dataSource);
+    const res = await source.getCollectionByContract(collection, chain, null)
     const mapedNfts: NftCardProps[] = res.nfts
     .map(item => ({
       image: item.meta.content[0].url,
@@ -44,9 +46,15 @@ function NftSlider({dataSource = DataSource.RARIBLE, size = 25, apiKey}: Props) 
     }))
     setNfts(mapedNfts);
   }
+
+  const fetchDataByOwner = () => {}
+
   useEffect(() => {
-    fetchData();
-  }, [dataSource])
+    if(collection)
+      fetchDataByCollection()
+    else
+      throw new Error("Collection address prop must be set!");
+  }, [collection])
 
   return (
     <Slider>
@@ -55,18 +63,4 @@ function NftSlider({dataSource = DataSource.RARIBLE, size = 25, apiKey}: Props) 
   )
 }
 
-export default NftSlider
-// slider component that does only slideing
-
-// default slide component that being used slide not passed 
-    //  video slide
-    //  audio slide
-    //  image slide
-
-
-// sliderWarper that fetchest nfts and data
-    // accept token_id, contract_address 
-    // has option to choose between opensea and rarible api
-
-
-// === > publish first version
+export default NftSlider;
