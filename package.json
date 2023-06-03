@@ -1,6 +1,6 @@
 {
   "name": "react-nft-slider",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "react component library to show nfts of a collection or wallet as slider. no need for web3.js and wallet connect to use this. Checkout github page for docs.",
   "scripts": {
     "rollup": "rollup -c --bundleConfigAsCjs",
