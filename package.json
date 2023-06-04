@@ -1,6 +1,6 @@
 {
   "name": "react-nft-slider",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "react component library to show nfts of a collection or wallet as slider. no need for web3.js and wallet connect to use this. Checkout github page for docs.",
   "scripts": {
     "rollup": "rollup -c --bundleConfigAsCjs",
@@ -46,6 +46,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "i": "^0.3.7",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
@@ -55,8 +56,10 @@
     "react-dom": "^18.2.0",
     "react-nft-slider": "^0.0.5",
     "rollup": "^3.23.0",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-dts": "^5.3.0",
     "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-serve": "^2.0.2",
     "storybook": "^7.0.18",

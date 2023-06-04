@@ -1,6 +1,6 @@
 import React from "react";
 // import { NftSlider } from "react-nft-slider";
-import { NftSlider } from "../../dist/esm/index";
+import { NftSlider } from "../../dist/cjs/index";
 
 function App() {
   // return <div>hdsaidsa</div>;
