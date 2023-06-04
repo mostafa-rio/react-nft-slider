@@ -1,6 +1,14 @@
 {
   "name": "react-nft-slider",
   "version": "0.0.6",
+  "keywords": [
+    "NFT React",
+    "React NFT Slider",
+    "React NFT Carousel",
+    "React NFT Gallery",
+    "NFT Carousel",
+    "NFT Carousel Slider"
+  ],
   "description": "react component library to show nfts of a collection or wallet as slider. no need for web3.js and wallet connect to use this. Checkout github page for docs.",
   "scripts": {
     "rollup": "rollup -c --bundleConfigAsCjs",
@@ -75,6 +83,10 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mostafa-rio/react-nft-slider"
+  },
   "types": "dist/index.d.ts",
   "publishConfig": {}
 }
