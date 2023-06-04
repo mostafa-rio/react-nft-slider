@@ -9,7 +9,7 @@ export type NftCardProps = {
   image: string;
 };
 
-function NftCard({ image, title, ...restProps }: NftCardProps) {
+const NftCard = ({ image, title, ...restProps }: NftCardProps) => {
   return (
     <div {...restProps} className="m-auto nft-card">
       {/* card header */}
@@ -21,8 +21,7 @@ function NftCard({ image, title, ...restProps }: NftCardProps) {
             {creatorAddress}
           </p> */}
         </div>
-        <div className="m-auto me-0 profiles">
-        </div>
+        <div className="m-auto me-0 profiles"></div>
       </div>
 
       {/* card content */}
@@ -38,8 +37,8 @@ function NftCard({ image, title, ...restProps }: NftCardProps) {
             mt-auto
                 w-100 d-flex justify-content-between"
         > */}
-          {/* price */}
-          {/* <div className="ml-0">
+        {/* price */}
+        {/* <div className="ml-0">
             <div className="nft-card__content_badge">Latest Bid</div>
             <div className="nft-card__content_price">{bid}4ETH</div>
           </div> */}
@@ -48,6 +47,6 @@ function NftCard({ image, title, ...restProps }: NftCardProps) {
       {/* </div> */}
     </div>
   );
-}
+};
 
 export default NftCard;

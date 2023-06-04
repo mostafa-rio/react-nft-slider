@@ -23,16 +23,14 @@ type Props = {
   // children?: React.ReactNode
 };
 
-function NftSlider({
+const NftSlider = ({
   dataSource = DataSource.RARIBLE,
   size = 25,
   // apiKey,
   // getNftsBy = 'collection',
   collection,
   chain = "ETHEREUM",
-}: // children,
-// owner
-Props) {
+}: Props) => {
   const [nfts, setNfts] = useState<NftCardProps[]>([]);
 
   const fetchDataByCollection = async () => {
@@ -59,6 +57,6 @@ Props) {
       ))}
     </Slider>
   );
-}
+};
 
 export default NftSlider;
