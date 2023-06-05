@@ -5,32 +5,46 @@
 .slider {
   width: 100%;
   overflow: hidden;
-  }
-  
-  .slider__cards {
-    display: flex;
-    gap: 0.4rem;
-    overflow: hidden;
-  }
-  
-  .slider__card {
-    flex: 0 0 auto;
-  }
-   
-  
-  .slider__control {
-    font-size: 24px;
-    position: absolute;
-    background: #fff;
-    border-radius: 3rem;
-    padding: .5rem 0.8rem;
-    top: 50%;
-    cursor: pointer;
-  }
-  .slider__control-left {
-    left: -0.4rem;
-  }
-  .slider__control-right {
-    right: -0.4rem;
-  }
-  
+}
+
+.slider__cards {
+  display: flex;
+  gap: 0.4rem;
+  overflow: hidden;
+}
+
+.slider__card {
+  flex: 0 0 auto;
+}
+
+.slider__control {
+  font-size: 24px;
+  position: absolute;
+  background: #fff;
+  border-radius: 3rem;
+  padding: 0.5rem 0.8rem;
+  top: 50%;
+  cursor: pointer;
+}
+.slider__control-left {
+  left: -0.4rem;
+}
+.slider__control-right {
+  right: -0.4rem;
+}
+
+.loading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+}
+.loading .loading-content {
+  margin: auto;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: white;
+}
