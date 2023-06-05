@@ -1,9 +1,12 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { Children, ReactNode, useEffect, useState } from "react";
 import Slider from "../slider/Slider";
 import NftCard, { NftCardProps } from "../nft-card/NftCard";
-import { DataSource } from "../../types";
+import { DataSource, SupportedChains, loadingDataStatus } from "../../types";
 import Service from "../../service";
-import { RaribleItemInCollectionType } from "../../types/Rarible";
+import {
+  RaribleItemInCollectionType,
+  RaribleSupportedChains,
+} from "../../types/Rarible";
 
 enum GetNftsBy {
   owner = "owner",
@@ -13,45 +16,70 @@ enum GetNftsBy {
 type Props = {
   dataSource?: DataSource.RARIBLE; // opensea in next version
   size?: number; // number of items to load in each request
+  collection: string;
+  chain?: SupportedChains;
+  loadingElement?: JSX.Element | undefined;
   // apiKey?: string,
   // getNftsBy: keyof typeof GetNftsBy,
-  collection: string;
   // owner?: string,
-  chain: "ETHEREUM" | "POLYGON";
-  // onlyShowSlider?: boolean,// alows users to fetch nfts on thier own and just make slider out of it
-  // nfts?: NftCardProps[] // nfts fetched by user and ready for slider
   // children?: React.ReactNode
 };
 
-const NftSlider = ({
-  dataSource = DataSource.RARIBLE,
-  size = 25,
-  // apiKey,
-  // getNftsBy = 'collection',
+const NftSlider: React.FC<Props> = ({
   collection,
   chain = "ETHEREUM",
-}: Props) => {
+  dataSource = DataSource.RARIBLE,
+  size = 25,
+  loadingElement,
+}) => {
   const [nfts, setNfts] = useState<NftCardProps[]>([]);
+  const [nextPage, setNextPage] = useState<string | null>(null);
+  const [loadingStatus, setLoadingStatus] =
+    useState<loadingDataStatus>("loaded");
 
   const fetchDataByCollection = async () => {
-    const source = await Service.createDataSourceInstance(dataSource);
-    const res = await source.getCollectionByContract(collection, chain, null);
-    const mapedNfts: NftCardProps[] = res.nfts.map((item) => ({
-      image: item.meta.content[0].url,
-      title: item.meta.name,
-    }));
-    setNfts(mapedNfts);
+    setLoadingStatus("loading");
+    try {
+      const source = await Service.createDataSourceInstance(dataSource);
+      const res = await source.getCollectionByContract(
+        collection,
+        chain,
+        nextPage,
+        size,
+      );
+      const mapedNfts: NftCardProps[] = res.nfts.map((item) => ({
+        image: item.meta.content[0].url,
+        title: item.meta.name,
+      }));
+      setNextPage(res.nextPage);
+      setNfts([...nfts, ...mapedNfts]);
+      setLoadingStatus("loaded");
+    } catch (error) {
+      setLoadingStatus("failed");
+      throw new Error("Failed fetching nft data!");
+    }
   };
 
-  // const fetchDataByOwner = () => {}
+  const fetchData = async () => {
+    if (collection) return await fetchDataByCollection();
+    else throw new Error("Collection address prop must be set!");
+  };
 
   useEffect(() => {
-    if (collection) fetchDataByCollection();
-    else throw new Error("Collection address prop must be set!");
-  }, [collection]);
+    fetchData();
+  }, [collection, chain]);
+
+  useEffect(() => {
+    if (size < 20 || size > 150)
+      throw new Error("Size must be between 20 and 150!");
+  }, []);
 
   return (
-    <Slider>
+    <Slider
+      loadingElement={loadingElement}
+      loadingStatus={loadingStatus}
+      onScrollEnd={fetchData}
+    >
       {nfts.map((item: NftCardProps, index: number) => (
         <NftCard key={index} {...item} />
       ))}

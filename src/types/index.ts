@@ -1,17 +1,24 @@
-import { RaribleItemInCollectionType } from "./Rarible"
+import { RaribleItemInCollectionType } from "./Rarible";
 
-export enum DataSource  {
-    RARIBLE = 'Rarible',
-    OPENSEA = 'OpeanSea'
+export enum DataSource {
+  RARIBLE = "Rarible",
+  OPENSEA = "OpeanSea",
 }
+export type loadingDataStatus = "loading" | "failed" | "loaded";
+export type SupportedChains = "ETHEREUM" | "POLYGON";
 
 export type Nft = {
-    id: string
-}
+  id: string;
+};
 
-export type getCollectionResType = (collection: string, chain: string, nextPage: string | null)  => Promise<{ nfts: RaribleItemInCollectionType[], nextPage: string | null }>
+export type getCollectionResType = (
+  collection: string,
+  chain: string,
+  nextPage: string | null,
+  size?: number,
+) => Promise<{ nfts: RaribleItemInCollectionType[]; nextPage: string | null }>;
 
 export interface ServiceInterface {
-    baseUrl: string,
-    getCollectionByContract: getCollectionResType
+  baseUrl: string;
+  getCollectionByContract: getCollectionResType;
 }
