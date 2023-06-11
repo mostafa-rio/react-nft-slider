@@ -32,9 +32,9 @@ const Slider: FC<SliderProps> = ({
   useTouchToScroll(sliderRef);
 
   useEffect(() => {
-    // if (loadingStatus == "loaded") {
-    //   handleScrollRight(sliderRef);
-    // }
+    if (loadingStatus == "loaded") {
+      handleScrollRight(sliderRef);
+    }
   }, [loadingStatus]);
 
   useEffect(() => {

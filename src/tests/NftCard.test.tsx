@@ -10,7 +10,8 @@ describe("NftCard component", () => {
   render(<NftCard image={nftImage} title={nftTitle} />);
 
   test("should load image and name of nft", () => {
-    // expect(screen.getByRole("img").getAttribute("src")).toEqual(nftImage);
-    // expect(screen.getByRole("paragraph")).toEqual(nftImage);
+    const imageEl = screen.getByRole("img");
+    screen.getByText(nftTitle);
+    expect(imageEl).toHaveAttribute("src", nftImage);
   });
 });
