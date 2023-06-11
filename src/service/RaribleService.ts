@@ -1,9 +1,16 @@
-import { ServiceInterface, getCollectionResType } from "../types";
+import {
+  NftType,
+  SupportedChains,
+  ServiceInterface,
+  getCollectionMethodType,
+  nftContentType,
+} from "../types";
+import { RaribleItemInCollectionType } from "../types/Rarible";
 
 export default class RaribleService implements ServiceInterface {
   baseUrl = "https://api.rarible.org/v0.1";
 
-  getCollectionByContract: getCollectionResType = async (
+  getCollectionByContract: getCollectionMethodType = async (
     collection,
     chain,
     nextPage,
@@ -19,10 +26,35 @@ export default class RaribleService implements ServiceInterface {
         },
       );
       const data = await response.json();
-      return { nfts: data.items, nextPage: data.continuation };
+      const nfts = data.items.map((item: RaribleItemInCollectionType) =>
+        this.mapRaribleItem(item),
+      );
+
+      return { nfts, nextPage: data.continuation };
     } catch (err) {
       console.log(err);
       throw new Error("Fetching data failed");
     }
   };
+
+  mapToSupportedChain(chain: string): SupportedChains {
+    if (chain === "matic" || chain === "POLYGON") return "POLYGON";
+    else return "ETHEREUM";
+  }
+
+  private mapRaribleItem(item: RaribleItemInCollectionType): NftType {
+    return {
+      tokenId: item.tokenId,
+      collection: item.collection,
+      content: <nftContentType[]>item.meta.content,
+      name: item.meta.name,
+      chain: this.mapToSupportedChain(item.blockchain),
+      owner: "string",
+      description: "string",
+      attributes: [],
+      mintedAt: "string",
+      lastPrice: "string",
+      originalObject: item,
+    };
+  }
 }

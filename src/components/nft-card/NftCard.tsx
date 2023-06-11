@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 // import { ArrowRight } from "react-bootstrap-icons";
 // import tickMark from "../../assets/tick-mark.png";
 import "./NftCard.css";
@@ -9,13 +9,13 @@ export type NftCardProps = {
   image: string;
 };
 
-const NftCard = ({ image, title, ...restProps }: NftCardProps) => {
+const NftCard: FC<NftCardProps> = ({ image, title, ...restProps }) => {
   return (
     <div {...restProps} className="m-auto nft-card">
       {/* card header */}
       <div className="nft-card__header d-flex">
         <div className="ms-0">
-          <h3 className="title">{title}</h3>
+          <p className="title">{title}</p>
           {/* <p className="creator">
             <span>by: </span>
             {creatorAddress}
@@ -25,12 +25,8 @@ const NftCard = ({ image, title, ...restProps }: NftCardProps) => {
       </div>
 
       {/* card content */}
-      <div
-        className="nft-card__content d-flex"
-        style={{
-          backgroundImage: `url("${image}")`,
-        }}
-      >
+      <div className="nft-card__content d-flex">
+        <img src={image} alt={title} className="nft-card__image" />
         {/* <div className="mt-auto content-mint-wrapper"> */}
         {/* <div
           className="content-mint 
@@ -49,4 +45,4 @@ const NftCard = ({ image, title, ...restProps }: NftCardProps) => {
   );
 };
 
-export default NftCard;
+export default React.memo(NftCard);

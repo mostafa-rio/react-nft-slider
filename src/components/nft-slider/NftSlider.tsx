@@ -1,13 +1,80 @@
-import React, { Children, ReactNode, useEffect, useState } from "react";
+import React, {
+  Children,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import Slider from "../slider/Slider";
 import NftCard, { NftCardProps } from "../nft-card/NftCard";
-import { DataSource, SupportedChains, loadingDataStatus } from "../../types";
+import {
+  DataSource,
+  NftType,
+  SupportedChains,
+  loadingDataStatus,
+} from "../../types";
 import Service from "../../service";
 import {
   RaribleItemInCollectionType,
   RaribleSupportedChains,
 } from "../../types/Rarible";
-
+const tnfts: NftCardProps[] = [
+  {
+    title: "nft title here",
+    image:
+      "https://lh3.googleusercontent.com/dmEAwcJEiyhliQCaUSwW9fV0_DhTsn6maTRrDUj-YTU0ekSyJbOfUEFp91cyR3nAVAlIZirc7-d5U4AuxmGQKL9yZ22Hl8E4Bg=s400",
+  },
+  {
+    title: "nft title here",
+    image:
+      "https://lh3.googleusercontent.com/jHir-ineLKs05xtFpnyEkvmaYu6wmiIP3OmCL23-86gvWrtEDyMe0XqXiToN_vgzMnSJB8mYz6kAqwvImThlpEeBhzxr6nTN8eA=s400",
+  },
+  {
+    title: "nft title here",
+    image:
+      "https://lh3.googleusercontent.com/jHir-ineLKs05xtFpnyEkvmaYu6wmiIP3OmCL23-86gvWrtEDyMe0XqXiToN_vgzMnSJB8mYz6kAqwvImThlpEeBhzxr6nTN8eA=s400",
+  },
+  {
+    title: "nft title here",
+    image:
+      "https://lh3.googleusercontent.com/jHir-ineLKs05xtFpnyEkvmaYu6wmiIP3OmCL23-86gvWrtEDyMe0XqXiToN_vgzMnSJB8mYz6kAqwvImThlpEeBhzxr6nTN8eA=s400",
+  },
+  {
+    title: "nft title here",
+    image:
+      "https://lh3.googleusercontent.com/jHir-ineLKs05xtFpnyEkvmaYu6wmiIP3OmCL23-86gvWrtEDyMe0XqXiToN_vgzMnSJB8mYz6kAqwvImThlpEeBhzxr6nTN8eA=s400",
+  },
+  {
+    title: "nft title here",
+    image:
+      "https://lh3.googleusercontent.com/QOvp4TyxNIUYYGNzZ6UfKU_XkAsc8MoG-qQvIaKR-Z1byacK_1ZSimda1JuNxWAQY3RSTn0qojRklVYR09YU7l7DotRfaQHG8kk=s400",
+  },
+  {
+    title: "nft title here",
+    image:
+      "https://assets.raribleuserdata.com/prod/v1/image/t_image_preview/aHR0cHM6Ly9pcGZzLmlvL2lwZnMvUW1TZThISmdaRUo3amNkOXhxMnE4S2hVakFDUkFaRUVjUkJXNFNacXN3ZTJocg==",
+  },
+  {
+    title: "nft title here",
+    image:
+      "https://lh3.googleusercontent.com/jHir-ineLKs05xtFpnyEkvmaYu6wmiIP3OmCL23-86gvWrtEDyMe0XqXiToN_vgzMnSJB8mYz6kAqwvImThlpEeBhzxr6nTN8eA=s400",
+  },
+  {
+    title: "nft title here",
+    image:
+      "https://lh3.googleusercontent.com/jHir-ineLKs05xtFpnyEkvmaYu6wmiIP3OmCL23-86gvWrtEDyMe0XqXiToN_vgzMnSJB8mYz6kAqwvImThlpEeBhzxr6nTN8eA=s400",
+  },
+  {
+    title: "nft title here",
+    image:
+      "https://lh3.googleusercontent.com/jHir-ineLKs05xtFpnyEkvmaYu6wmiIP3OmCL23-86gvWrtEDyMe0XqXiToN_vgzMnSJB8mYz6kAqwvImThlpEeBhzxr6nTN8eA=s400",
+  },
+  {
+    title: "nft title here",
+    image:
+      "https://lh3.googleusercontent.com/jHir-ineLKs05xtFpnyEkvmaYu6wmiIP3OmCL23-86gvWrtEDyMe0XqXiToN_vgzMnSJB8mYz6kAqwvImThlpEeBhzxr6nTN8eA=s400",
+  },
+];
 enum GetNftsBy {
   owner = "owner",
   collection = "collection",
@@ -19,10 +86,6 @@ type Props = {
   collection: string;
   chain?: SupportedChains;
   loadingElement?: JSX.Element | undefined;
-  // apiKey?: string,
-  // getNftsBy: keyof typeof GetNftsBy,
-  // owner?: string,
-  // children?: React.ReactNode
 };
 
 const NftSlider: React.FC<Props> = ({
@@ -40,19 +103,20 @@ const NftSlider: React.FC<Props> = ({
   const fetchDataByCollection = async () => {
     setLoadingStatus("loading");
     try {
-      const source = await Service.createDataSourceInstance(dataSource);
+      const source = Service.createDataSourceInstance(dataSource);
       const res = await source.getCollectionByContract(
         collection,
         chain,
         nextPage,
         size,
       );
-      const mapedNfts: NftCardProps[] = res.nfts.map((item) => ({
-        image: item.meta.content[0].url,
-        title: item.meta.name,
-      }));
+
       setNextPage(res.nextPage);
-      setNfts([...nfts, ...mapedNfts]);
+      const mapedNfts: NftCardProps[] = res.nfts.map((item) => ({
+        image: item.content[0].url,
+        title: item.name,
+      }));
+      setNfts(() => [...nfts, ...mapedNfts]);
       setLoadingStatus("loaded");
     } catch (error) {
       setLoadingStatus("failed");

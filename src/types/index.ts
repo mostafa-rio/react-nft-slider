@@ -6,19 +6,37 @@ export enum DataSource {
 }
 export type loadingDataStatus = "loading" | "failed" | "loaded";
 export type SupportedChains = "ETHEREUM" | "POLYGON";
+export type nftAttribute = { key: string; value: string };
+export type nftContentType = { "@type": string; mimeType: string; url: string };
 
-export type Nft = {
-  id: string;
+export type NftType = {
+  tokenId: string;
+  collection: string;
+  content: nftContentType[];
+  name: string;
+  chain: SupportedChains;
+  owner?: string;
+  description?: string;
+  attributes: nftAttribute[];
+  mintedAt: string;
+  lastPrice: string;
+  originalObject: unknown;
 };
 
-export type getCollectionResType = (
+export type getCollectionMethodType = (
   collection: string,
   chain: string,
   nextPage: string | null,
   size?: number,
-) => Promise<{ nfts: RaribleItemInCollectionType[]; nextPage: string | null }>;
+) => Promise<getCollectionResType>;
+
+export type getCollectionResType = {
+  nfts: NftType[];
+  nextPage: string | null;
+};
 
 export interface ServiceInterface {
   baseUrl: string;
-  getCollectionByContract: getCollectionResType;
+  mapToSupportedChain: (arg: string) => SupportedChains;
+  getCollectionByContract: getCollectionMethodType;
 }

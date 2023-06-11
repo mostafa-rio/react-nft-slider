@@ -10,14 +10,32 @@
 .slider__cards {
   display: flex;
   gap: 0.4rem;
+  scroll-behavior: smooth;
   overflow: hidden;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .slider__card {
   flex: 0 0 auto;
 }
 
+.slider__card img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 .slider__control {
+  border: none;
+  outline: none;
   font-size: 24px;
   position: absolute;
   background: #fff;

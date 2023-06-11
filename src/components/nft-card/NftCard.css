@@ -1,9 +1,9 @@
 .nft-card {
-  border-radius: 10px;
+  border-radius: 0.7rem;
   width: 300px;
-  padding: 7px; 
+  padding: 0.5rem;
   max-width: 100%;
-  background: #15202b;
+  background: #191c1f;
   box-shadow: 0px 14px 40px rgba(#eaeaea, 0.2);
 }
 
@@ -53,7 +53,6 @@
   top: 2px;
 } */
 
-
 /* .nft-card__header .profiles .profile-wrapper:nth-child(2) {
   right: 35px;
   z-index: 0;
@@ -71,18 +70,22 @@
     background-size: cover;
   }
 } */
- 
 
 .nft-card__content {
   aspect-ratio: 1/1;
-  padding: 5px;
-  border-radius: 10px;
+  border-radius: 0.7rem;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-
+.nft-card__image {
+  object-fit: cover;
+  padding: 0;
+  border-radius: 0.7rem;
+  width: 100%;
+  vertical-align: middle;
+}
 .nft-card__content_badge {
   font-size: 12px;
   font-weight: 400;
