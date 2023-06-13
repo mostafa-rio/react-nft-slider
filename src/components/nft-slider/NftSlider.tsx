@@ -13,11 +13,7 @@ import {
   SupportedChains,
   loadingDataStatus,
 } from "../../types";
-import Service from "../../service";
-import {
-  RaribleItemInCollectionType,
-  RaribleSupportedChains,
-} from "../../types/Rarible";
+import ApiService from "../../service";
 
 enum GetNftsBy {
   owner = "owner",
@@ -47,14 +43,13 @@ const NftSlider: React.FC<Props> = ({
   const fetchDataByCollection = async () => {
     setLoadingStatus("loading");
     try {
-      const source = Service.createDataSourceInstance(dataSource);
-      const res = await source.getCollectionByContract(
+      const service = ApiService.createService(dataSource);
+      const res = await service.getCollectionByContract(
         collection,
         chain,
         nextPage,
         size,
       );
-
       setNextPage(res.nextPage);
       const mapedNfts: NftCardProps[] = res.nfts.map((item) => ({
         image: item.content[0].url,

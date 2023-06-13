@@ -42,7 +42,7 @@ const Slider: FC<SliderProps> = ({
   }, [checkForScrollEnd]);
 
   return (
-    <div className="slider-wrapper">
+    <div className="slider-wrapper" data-testid="slider">
       {/* slider */}
       <div className="slider">
         <div className="slider__cards" ref={sliderRef}>
