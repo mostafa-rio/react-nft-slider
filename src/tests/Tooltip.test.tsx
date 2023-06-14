@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
-import Tooltip from "../components/tooltip";
+import Tooltip from "../components/tooltip/Tooltip";
 
 describe("Tooltip", () => {
   test("renders tooltip when hovering over the content", () => {

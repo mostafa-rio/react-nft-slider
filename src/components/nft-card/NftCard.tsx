@@ -3,7 +3,7 @@ import React, { FC } from "react";
 // import tickMark from "../../assets/tick-mark.png";
 import "./NftCard.css";
 import ChevronRight from "../icons/ChevronRight";
-import Tooltip from "../Tooltip";
+import Tooltip from "../tooltip/Tooltip";
 import { nftContentType } from "../../types";
 
 export type NftCardProps = {
