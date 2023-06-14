@@ -66,3 +66,8 @@
   font-weight: bold;
   color: white;
 }
+
+.empty-icon {
+  text-align: center;
+  width: 100%;
+}

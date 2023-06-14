@@ -6,8 +6,14 @@ export enum DataSource {
 }
 export type loadingDataStatus = "loading" | "failed" | "loaded";
 export type SupportedChains = "ETHEREUM" | "POLYGON";
+export type ShowNftsBy = "owner" | "collection";
 export type nftAttribute = { key: string; value: string };
-export type nftContentType = { "@type": string; mimeType: string; url: string };
+export type contentFileTypes = "VIDEO" | "AUDIO" | "IMAGE";
+export type nftContentType = {
+  "@type": contentFileTypes;
+  mimeType: string;
+  url: string;
+};
 
 export type NftType = {
   tokenId: string;
@@ -28,9 +34,16 @@ export type getCollectionMethodType = (
   chain: string,
   nextPage: string | null,
   size?: number,
-) => Promise<getCollectionResType>;
+) => Promise<NftListResponseType>;
 
-export type getCollectionResType = {
+export type GetNftsByOwnerType = (
+  owner: string,
+  chain: string,
+  nextPage: string | null,
+  size?: number,
+) => Promise<NftListResponseType>;
+
+export type NftListResponseType = {
   nfts: NftType[];
   nextPage: string | null;
 };
@@ -39,4 +52,5 @@ export interface ServiceInterface {
   baseUrl: string;
   mapToSupportedChain: (arg: string) => SupportedChains;
   getCollectionByContract: getCollectionMethodType;
+  getNftsByOwner: GetNftsByOwnerType;
 }

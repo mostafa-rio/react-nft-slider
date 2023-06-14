@@ -4,11 +4,34 @@ import {
   ServiceInterface,
   getCollectionMethodType,
   nftContentType,
+  GetNftsByOwnerType,
 } from "../types";
 import { RaribleItemInCollectionType } from "../types/Rarible";
 
 export default class RaribleService implements ServiceInterface {
   baseUrl = "https://api.rarible.org/v0.1";
+
+  getNftsByOwner: GetNftsByOwnerType = async (owner, chain, nextPage, size) => {
+    try {
+      const response = await fetch(
+        `${this.baseUrl}/items/byOwner?owner=${chain}:${owner}` +
+          (nextPage ? `&continuation=${nextPage}` : "") +
+          (size ? `&size=${size}` : ""),
+        {
+          method: "GET",
+        },
+      );
+      const data = await response.json();
+      const nfts = data.items.map((item: RaribleItemInCollectionType) =>
+        this.mapRaribleItem(item),
+      );
+
+      return { nfts, nextPage: data.continuation || null };
+    } catch (err) {
+      console.log(err);
+      throw new Error("Fetching data failed");
+    }
+  };
 
   getCollectionByContract: getCollectionMethodType = async (
     collection,

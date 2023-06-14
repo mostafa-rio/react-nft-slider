@@ -9,6 +9,7 @@
 
 .nft-card__header .title {
   font-size: 1.3rem;
+  padding: 0.5rem;
   color: #fff;
 }
 
@@ -81,10 +82,21 @@
 
 .nft-card__image {
   object-fit: cover;
+  aspect-ratio: 1;
+  max-width: 18.75rem;
+  max-height: 18.75rem;
   padding: 0;
   border-radius: 0.7rem;
   width: 100%;
   vertical-align: middle;
+}
+
+.nft-card__video {
+  border-radius: 0.7rem;
+  object-fit: cover;
+  aspect-ratio: 1;
+  max-width: 18.75rem;
+  max-height: 18.75rem;
 }
 .nft-card__content_badge {
   font-size: 12px;

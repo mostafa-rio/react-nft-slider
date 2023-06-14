@@ -17,6 +17,9 @@ export default class OpenSeaService implements ServiceInterface {
     return "ETHEREUM";
   }
 
+  getNftsByOwner: getCollectionMethodType = () => {
+    return new Promise((resolve) => ({ nextPage: null, nfts: [] }));
+  };
   getCollectionByContract: getCollectionMethodType = () => {
     return new Promise((resolve) => ({ nextPage: null, nfts: [] }));
   };

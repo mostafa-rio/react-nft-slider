@@ -10,7 +10,7 @@ import {
   DataSource,
   NftType,
   ServiceInterface,
-  getCollectionResType,
+  NftListResponseType,
 } from "../types";
 import { NftSlider } from "../components";
 // import Service from "../service";
@@ -18,6 +18,8 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import ApiService from "../service";
 import { act } from "react-dom/test-utils";
+const nextPageLink = "next-page-link";
+const ownerAddress = "0x670fd103b1a08628e9557cd66b8790";
 const collectionAddress: string = "0x670fd103b1a08628e9557cd66b87ded841115190";
 const nft: NftType = {
   tokenId: "5173",
@@ -38,13 +40,28 @@ const nft: NftType = {
   lastPrice: "12.2",
   originalObject: {},
 };
-const res: getCollectionResType = {
+const res: NftListResponseType = {
   nfts: [],
-  nextPage: null,
+  nextPage: nextPageLink,
 };
+
+const nftsByOwnerRes: NftListResponseType = {
+  nfts: [],
+  nextPage: nextPageLink,
+};
+
 for (let i = 0; i < 15; i++) {
   res.nfts.push(nft);
+  nftsByOwnerRes.nfts.push({ ...nft, name: "nft by owner" });
 }
+const byOwnerMock = jest.fn(
+  (owner: string, chain: string, nextPage: string | null, size?: number) =>
+    Promise.resolve(nftsByOwnerRes),
+);
+const byCollectionMock = jest.fn(
+  (collection: string, chain: string, nextPage: string | null, size?: number) =>
+    Promise.resolve(res),
+);
 const mockServiceplementation = (
   dataSource: DataSource,
   apiKey: string | undefined,
@@ -52,72 +69,79 @@ const mockServiceplementation = (
   return {
     baseUrl: "",
     mapToSupportedChain: () => "ETHEREUM",
-    getCollectionByContract: (
-      collection: string,
-      chain: string,
-      nextPage: string | null,
-      size?: number,
-    ) => Promise.resolve(res),
+    getNftsByOwner: byOwnerMock,
+    getCollectionByContract: byCollectionMock,
   };
 };
 
 describe("NftSlider Component", () => {
-  test("Should render NftSlider", async () => {
+  test("Should render NftSlider by default with a collection address", async () => {
     jest
       .spyOn(ApiService, "createService")
       .mockImplementation(mockServiceplementation);
     await act(async () => {
       await render(<NftSlider collection={collectionAddress} />);
     });
-    await waitFor(() => {
-      expect(screen.getAllByText(res.nfts[0].name).length).toEqual(
-        res.nfts.length,
-      );
-    });
+    expect(screen.getAllByText(res.nfts[0].name).length).toEqual(
+      res.nfts.length,
+    );
   });
 
-  // test("Should load more data on scroll reaches to the ends", async () => {
-  //   const getCollectionFn = jest.fn(
-  //     (
-  //       collection: string,
-  //       chain: string,
-  //       nextPage: string | null,
-  //       size?: number,
-  //     ) =>
-  //       Promise.resolve({
-  //         nfts: [nft, nft, nft, nft],
-  //         nextPage: "nextpagelink",
-  //       }),
-  //   );
-  //   const fn = (
-  //     dataSource: DataSource,
-  //     apiKey: string | undefined,
-  //   ): ServiceInterface => {
-  //     return {
-  //       baseUrl: "",
-  //       mapToSupportedChain: () => "ETHEREUM",
-  //       getCollectionByContract: getCollectionFn,
-  //     };
-  //   };
+  test("Should render get nfts by owner", async () => {
+    jest
+      .spyOn(ApiService, "createService")
+      .mockImplementation(mockServiceplementation);
+    await act(async () => {
+      await render(<NftSlider showNftsBy="owner" owner={ownerAddress} />);
+    });
+    screen.getAllByText(nftsByOwnerRes.nfts[0].name);
+  });
 
-  //   jest.spyOn(ApiService, "createService").mockImplementation(fn);
+  test("Should load more when next page exsits for owner nfts", async () => {
+    jest
+      .spyOn(ApiService, "createService")
+      .mockImplementation(mockServiceplementation);
+    await act(async () => {
+      render(<NftSlider showNftsBy="owner" owner={ownerAddress} />);
+    });
+    await act(async () => {
+      const element = screen.getByTestId("slider-cards");
+      userEvent.click(element);
+      userEvent.click(element);
+      userEvent.click(element);
+      userEvent.click(element);
+      userEvent.click(element);
+      userEvent.click(element);
+    });
+    expect(byOwnerMock).lastCalledWith(
+      ownerAddress,
+      "ETHEREUM",
+      nextPageLink,
+      25,
+    );
+  });
 
-  //   await act(async () => {
-  //     await render(
-  //       <NftSlider chain="ETHEREUM" collection={collectionAddress} />,
-  //     );
-  //   });
-  //   await act(() => {
-  //     const right = screen.getByTestId("control-right");
-  //     userEvent.click(right);
-  //   });
-
-  //   expect(screen.getAllByAltText(nft.name).length).toEqual(8);
-  //   // expect(getCollectionFn).toHaveBeenCalledWith(
-  //   //   collectionAddress,
-  //   //   "ETHEREUM",
-  //   //   "nextpagelink",
-  //   //   25,
-  //   // );
-  // });
+  test("Should load more when next page exsits for collection nfts", async () => {
+    jest
+      .spyOn(ApiService, "createService")
+      .mockImplementation(mockServiceplementation);
+    await act(async () => {
+      render(<NftSlider collection={collectionAddress} />);
+    });
+    await act(async () => {
+      const element = screen.getByTestId("slider-cards");
+      userEvent.click(element);
+      userEvent.click(element);
+      userEvent.click(element);
+      userEvent.click(element);
+      userEvent.click(element);
+      userEvent.click(element);
+    });
+    expect(byCollectionMock).lastCalledWith(
+      collectionAddress,
+      "ETHEREUM",
+      nextPageLink,
+      25,
+    );
+  });
 });

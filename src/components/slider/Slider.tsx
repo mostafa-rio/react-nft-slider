@@ -30,12 +30,13 @@ const Slider: FC<SliderProps> = ({
   const handleScrollRight = useScrollRight();
   const checkForScrollEnd = useScrollEnded(sliderRef);
   useTouchToScroll(sliderRef);
-
+  const initialRender = useRef(true);
   useEffect(() => {
-    if (loadingStatus == "loaded") {
+    if (initialRender && initialRender.current) initialRender.current = false;
+    else if (!initialRender.current && loadingStatus == "loaded") {
       handleScrollRight(sliderRef);
     }
-  }, [loadingStatus]);
+  }, [children]);
 
   useEffect(() => {
     if (checkForScrollEnd) onScrollEnd();
@@ -45,7 +46,11 @@ const Slider: FC<SliderProps> = ({
     <div className="slider-wrapper" data-testid="slider">
       {/* slider */}
       <div className="slider">
-        <div className="slider__cards" ref={sliderRef}>
+        <div
+          className="slider__cards"
+          data-testid="slider-cards"
+          ref={sliderRef}
+        >
           {React.Children.map(children, (child, index) => (
             <div key={index} className="slider__card">
               {child}

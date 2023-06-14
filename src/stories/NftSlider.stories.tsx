@@ -27,6 +27,15 @@ export const DefaultUse: Story = {
   },
 };
 
+export const ByOwner: Story = {
+  args: {
+    owner: "0xCc2edaEdebEA9c37d3aBc3912fF99b08904B1c99",
+    chain: "ETHEREUM",
+    size: 20,
+    showNftsBy: "owner",
+  },
+};
+
 // export const WithRaribleSource: Story = {
 //   render: () => <NftSlider dataSource={} />
 // }
