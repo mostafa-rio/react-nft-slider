@@ -12,7 +12,7 @@
   "description": "react component library to show nfts of a collection or wallet as slider. no need for web3.js and wallet connect to use this. Checkout github page for docs.",
   "scripts": {
     "rollup": "rollup -c --bundleConfigAsCjs",
-    "dev": "rollup -c rollup.config.exampleProject.js -w --bundleConfigAsCjs",
+    "dev": "rollup -c --bundleConfigAsCjs && rollup -c rollup.config.exampleProject.js -w --bundleConfigAsCjs",
     "test": "jest --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
